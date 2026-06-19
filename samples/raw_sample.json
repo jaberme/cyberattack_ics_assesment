@@ -1,0 +1,81 @@
+{
+  "id": "muestra-sintetica",
+  "region": "Mixta",
+  "description": "Fixture SINTÉTICO para pruebas. IPs de rangos de documentación (RFC 5737). NO son hosts reales.",
+  "total": 7,
+  "retrieved": 7,
+  "hosts": [
+    {
+      "ip": "192.0.2.21",
+      "location": {"country_code": "ES", "country": "Spain", "city": "Almería"},
+      "autonomous_system": {"name": "Telefonica de Espana", "asn": 3352},
+      "labels": ["INDUSTRIAL_CONTROL_SYSTEM"],
+      "services": [
+        {
+          "port": 20256,
+          "service_name": "UNITRONICS_PCOM",
+          "software": [
+            {"vendor": "Unitronics", "product": "Vision Series", "version": "1.0",
+             "cpe": "cpe:2.3:o:unitronics:vision:*:*:*:*:*:*:*:*"}
+          ]
+        }
+      ]
+    },
+    {
+      "ip": "192.0.2.45",
+      "location": {"country_code": "ES", "city": "Murcia"},
+      "autonomous_system": {"name": "Vodafone Espana"},
+      "labels": ["INDUSTRIAL_CONTROL_SYSTEM"],
+      "services": [
+        {"port": 5900, "service_name": "VNC", "software": []},
+        {"port": 102, "service_name": "S7",
+         "software": [{"vendor": "Siemens", "product": "S7-1200", "version": "4.2"}]}
+      ]
+    },
+    {
+      "ip": "192.0.2.77",
+      "location": {"country_code": "ES", "city": "Barcelona"},
+      "autonomous_system": {"name": "Orange Espagne"},
+      "labels": [],
+      "services": [
+        {"port": 102, "service_name": "S7",
+         "software": [{"vendor": "Siemens", "product": "S7-1200", "version": "4.5"}]}
+      ]
+    },
+    {
+      "ip": "198.51.100.10",
+      "location": {"country_code": "UA", "city": "Lviv"},
+      "autonomous_system": {"name": "Vechir Telecom"},
+      "labels": [],
+      "services": [
+        {"port": 502, "service_name": "MODBUS",
+         "labels": [{"value": "ENCO"}], "software": []}
+      ]
+    },
+    {
+      "ip": "203.0.113.5",
+      "location": {"country_code": "US", "city": "Dallas"},
+      "autonomous_system": {"name": "SpaceX Starlink"},
+      "labels": ["INDUSTRIAL_CONTROL_SYSTEM"],
+      "services": [
+        {"port": 44818, "service_name": "ETHERNET_IP",
+         "software": [{"vendor": "Rockwell Automation",
+                       "product": "ControlLogix 1756-EN2T", "version": "5.0"}]}
+      ]
+    },
+    {
+      "ip": "198.51.100.200",
+      "location": {"country_code": "DE"},
+      "autonomous_system": {"name": "Some ISP"},
+      "labels": ["HONEYPOT", "INDUSTRIAL_CONTROL_SYSTEM"],
+      "services": [{"port": 502, "service_name": "MODBUS"}]
+    },
+    {
+      "ip": "203.0.113.99",
+      "location": {"country_code": "US"},
+      "autonomous_system": {"name": "Amazon.com, Inc."},
+      "labels": [],
+      "services": [{"port": 502, "service_name": "MODBUS"}]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+# =============================================================================
+# Catálogo de consultas Censys (Apéndice A del TFG) traducido a CenQL / Platform
+# =============================================================================
+# IMPORTANTE — verificación de sintaxis y etiquetas:
+#   La Censys Platform usa CenQL (campos prefijados con host.*). Las consultas
+#   legacy del TFG (services.port=502, labels='honeypot') se han traducido a
+#   host.services.port=502 / host.labels=HONEYPOT, etc.
+#
+#   SINTAXIS DE ETIQUETAS VALIDADA CONTRA LA PLATFORM (junio 2026):
+#     - Las etiquetas viven a nivel de SERVICIO: host.services.labels.value.
+#     - Honeypot:  not host.services.labels.value="HONEYPOT"
+#     - ICS:       host.services.labels.value="ICS"
+#       (el token legacy "INDUSTRIAL_CONTROL_SYSTEM" NO existe en la Platform;
+#        el conversor de consultas devuelve "ICS").
+#   Si algún token difiere en tu cuenta, valídalo con el conversor de consultas
+#   integrado o el "label report" y corrígelo aquí: el resto del pipeline es
+#   independiente de la sintaxis de consulta.
+#
+#   Nota: "X con VNC simultáneo" se expresa pidiendo dos servicios en el mismo
+#   host (host.services.port=102 and host.services.port=5900); CenQL exige ambos
+#   servicios presentes en el registro.
+# =============================================================================
+
+queries:
+
+  # ---------------------------------------------------------------- España ---
+  España:
+    - id: es-modbus
+      description: "Modbus TCP en España (sin honeypots ni cloud)"
+      cenql: >
+        host.services.port=502 and host.location.country_code=ES
+        and not host.services.labels.value="HONEYPOT"
+        and not host.autonomous_system.name: {"Amazon", "Google", "Microsoft", "DigitalOcean"}
+    - id: es-s7comm
+      description: "S7Comm (Siemens) en España"
+      cenql: >
+        host.services.port=102 and host.location.country_code=ES
+        and not host.services.labels.value="HONEYPOT"
+    - id: es-iec104
+      description: "IEC-104 en España"
+      cenql: "host.services.port=2404 and host.location.country_code=ES"
+    - id: es-bacnet
+      description: "BACnet/IP en España"
+      cenql: "host.services.port=47808 and host.location.country_code=ES"
+    - id: es-enip
+      description: "EtherNet/IP / CIP en España"
+      cenql: "host.services.port=44818 and host.location.country_code=ES"
+    - id: es-ics-vnc
+      description: "Sistemas ICS españoles con VNC expuesto"
+      cenql: >
+        host.location.country_code=ES
+        and host.services.labels.value="ICS"
+        and host.services.port=5900
+    - id: es-ics-telnet
+      description: "Sistemas ICS españoles con Telnet expuesto"
+      cenql: >
+        host.location.country_code=ES
+        and host.services.labels.value="ICS"
+        and host.services.port=23
+    - id: es-ics-codesys
+      description: "Sistemas ICS españoles con CODESYS expuesto"
+      cenql: >
+        host.location.country_code=ES
+        and host.services.labels.value="ICS"
+        and host.services.port=1217
+    - id: es-s7-vnc
+      description: "S7Comm con VNC simultáneo en España"
+      cenql: >
+        host.services.port=102 and host.services.port=5900
+        and host.location.country_code=ES
+
+  # ------------------------------------------------- Europa Occidental -------
+  "Europa Occidental":
+    - id: eu-modbus
+      description: "Modbus TCP en Europa Occidental"
+      cenql: >
+        host.services.port=502
+        and host.location.country_code: {"DE", "FR", "IT", "NL", "PL", "BE", "PT"}
+        and not host.services.labels.value="HONEYPOT"
+    - id: eu-s7comm-de
+      description: "S7Comm (Siemens) en Alemania"
+      cenql: >
+        host.services.port=102 and host.location.country_code=DE
+        and not host.services.labels.value="HONEYPOT"
+    - id: eu-iec104
+      description: "IEC-104 en Europa Occidental"
+      cenql: >
+        host.services.port=2404
+        and host.location.country_code: {"DE", "FR", "IT", "NL", "PL"}
+    - id: eu-bacnet
+      description: "BACnet/IP en Europa Occidental"
+      cenql: >
+        host.services.port=47808
+        and host.location.country_code: {"DE", "FR", "IT", "NL", "BE"}
+    - id: eu-enip
+      description: "EtherNet/IP en Europa Occidental"
+      cenql: >
+        host.services.port=44818
+        and host.location.country_code: {"DE", "FR", "IT", "NL", "PL"}
+
+  # ------------------------------------------- Europa del Este / Ucrania -----
+  "Europa del Este / Ucrania":
+    - id: ee-modbus-ua
+      description: "Modbus TCP en Ucrania"
+      cenql: >
+        host.services.port=502 and host.location.country_code=UA
+        and not host.services.labels.value="HONEYPOT"
+    - id: ee-iec104-ua
+      description: "IEC-104 en Ucrania"
+      cenql: "host.services.port=2404 and host.location.country_code=UA"
+    - id: ee-modbus-plro
+      description: "Modbus TCP en Polonia y Rumanía"
+      cenql: >
+        host.services.port=502
+        and host.location.country_code: {"PL", "RO"}
+        and not host.services.labels.value="HONEYPOT"
+    - id: ee-enco-ua
+      description: "Controladores ENCO (calefacción urbana) en Ucrania"
+      cenql: >
+        host.services.port=502 and host.location.country_code=UA
+        and host.services: (banner: "ENCO")
+    - id: ee-iec104-baltic
+      description: "IEC-104 en Rumanía y Bálticos"
+      cenql: >
+        host.services.port=2404
+        and host.location.country_code: {"RO", "LT", "EE", "LV"}
+
+  # ---------------------------------------------------- Oriente Medio --------
+  "Oriente Medio":
+    - id: me-modbus
+      description: "Modbus TCP en Israel, Irán y Arabia Saudí"
+      cenql: >
+        host.services.port=502
+        and host.location.country_code: {"IL", "IR", "SA", "AE"}
+        and not host.services.labels.value="HONEYPOT"
+    - id: me-unitronics
+      description: "Unitronics PCOM (puerto 20256) en Oriente Medio"
+      cenql: >
+        host.services.port=20256
+        and host.location.country_code: {"IL", "IR", "SA", "AE"}
+    - id: me-s7comm
+      description: "S7Comm en Oriente Medio"
+      cenql: >
+        host.services.port=102
+        and host.location.country_code: {"SA", "AE", "IL"}
+    - id: me-dnp3
+      description: "DNP3 en Oriente Medio"
+      cenql: >
+        host.services.port=20000
+        and host.location.country_code: {"SA", "AE", "IL", "IR"}
+
+  # ---------------------------------------------------------- África ---------
+  "África":
+    - id: af-modbus
+      description: "Modbus TCP en África (principales países)"
+      cenql: >
+        host.services.port=502
+        and host.location.country_code: {"ZA", "EG", "NG", "DZ", "MA", "TN", "KE", "GH"}
+        and not host.services.labels.value="HONEYPOT"
+    - id: af-water
+      description: "Agua/saneamiento (ICS) en Sudáfrica y Egipto"
+      cenql: >
+        host.services.port=502
+        and host.location.country_code: {"ZA", "EG"}
+        and host.services.labels.value="ICS"
+    - id: af-bacnet
+      description: "BACnet en África"
+      cenql: >
+        host.services.port=47808
+        and host.location.country_code: {"ZA", "EG", "NG", "MA"}
+
+  # -------------------------------------------------- Estados Unidos ---------
+  "Estados Unidos":
+    - id: us-modbus
+      description: "Modbus TCP en EE.UU."
+      cenql: >
+        host.services.port=502 and host.location.country_code=US
+        and not host.services.labels.value="HONEYPOT"
+    - id: us-enip
+      description: "EtherNet/IP / CIP en EE.UU."
+      cenql: >
+        host.services.port=44818 and host.location.country_code=US
+        and not host.services.labels.value="HONEYPOT"
+    - id: us-unitronics
+      description: "Unitronics PCOM en EE.UU."
+      cenql: "host.services.port=20256 and host.location.country_code=US"
+    - id: us-dnp3
+      description: "DNP3 en EE.UU. (utilities eléctricas)"
+      cenql: >
+        host.services.port=20000 and host.location.country_code=US
+        and not host.services.labels.value="HONEYPOT"
+
+  # ---------------------------------------- Consultas globales de referencia -
+  "Global":
+    - id: gl-modbus
+      description: "Total Modbus TCP global (sin honeypots)"
+      cenql: 'host.services.port=502 and not host.services.labels.value="HONEYPOT"'
+    - id: gl-ics
+      description: "Total ICS etiquetado global"
+      cenql: 'host.services.labels.value="ICS"'
+    - id: gl-unitronics
+      description: "Unitronics PCOM global"
+      cenql: "host.services.port=20256"

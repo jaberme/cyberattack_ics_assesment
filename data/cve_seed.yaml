@@ -1,0 +1,74 @@
+# =============================================================================
+# Catálogo semilla de CVEs ICS de alto impacto (Tabla 2.4 del TFG)
+# =============================================================================
+# Permite la correlación OFFLINE y rápida para los fabricantes/modelos clave.
+# 'match_keywords' debe casar (en AND) con el fingerprint de Censys
+# (vendor/product/version/protocolo, en minúsculas).
+# La correlación dinámica completa se obtiene activando NVD (--nvd).
+# =============================================================================
+
+cves:
+  - cve: CVE-2024-33698
+    cvss: 9.8
+    severity: CRÍTICO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["siemens", "sinec"]
+    kev: false
+    notes: "Siemens UMC (SINEC NMS, SIMATIC PCS neo, TIA Portal) — RCE sin autenticación"
+
+  - cve: CVE-2024-45032
+    cvss: 10.0
+    severity: CRÍTICO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["siemens", "industrial edge"]
+    kev: false
+    notes: "Siemens Industrial Edge Management — autenticación omitida"
+
+  - cve: CVE-2023-3595
+    cvss: 9.8
+    severity: CRÍTICO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["rockwell", "controllogix"]
+    kev: true
+    notes: "Rockwell ControlLogix 1756 — out-of-bounds write CIP; persistencia comparable a TRISIS"
+
+  - cve: CVE-2021-22681
+    cvss: 10.0
+    severity: CRÍTICO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["rockwell", "logix"]
+    kev: true
+    notes: "Rockwell Studio 5000 / CompactLogix / ControlLogix — clave criptográfica comprometida (CISA KEV)"
+
+  - cve: CVE-2023-6448
+    cvss: 9.8
+    severity: CRÍTICO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["unitronics"]
+    kev: true
+    default_credentials: true
+    notes: "Unitronics Vision Series — contraseña por defecto '1111' en puerto 20256; explotado por CyberAv3ngers"
+
+  - cve: CVE-2025-3756
+    cvss: 8.7
+    severity: ALTO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["abb"]
+    kev: false
+    notes: "ABB 800xA / Symphony Plus (IEC 61850 MMS) — DoS en stack MMS"
+
+  - cve: CVE-2023-6408
+    cvss: 8.1
+    severity: ALTO
+    vector: "AV:N/AC:L/PR:L/UI:N"
+    match_keywords: ["schneider", "modicon"]
+    kev: false
+    notes: "Schneider Modicon M340/M580, EcoStruxure — autenticación débil Modbus"
+
+  - cve: CVE-2025-40943
+    cvss: 7.5
+    severity: ALTO
+    vector: "AV:N/AC:L/PR:N/UI:N"
+    match_keywords: ["siemens", "s7-1200"]
+    kev: false
+    notes: "Siemens S7-1200 — referenciada en hallazgos de España (Tabla 5.2)"

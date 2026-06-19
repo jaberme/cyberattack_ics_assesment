@@ -1,0 +1,6 @@
+# Dependencias del ICS-OSINT Toolkit
+# Instalación:  pip install -r requirements.txt
+
+censys-platform>=0.13   # Censys Platform API SDK (consulta pasiva del índice)
+requests>=2.31          # NVD API 2.0 y catálogo KEV de CISA
+PyYAML>=6.0             # configuración y catálogo de consultas

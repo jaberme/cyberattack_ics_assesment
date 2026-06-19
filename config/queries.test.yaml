@@ -1,0 +1,17 @@
+# Muestra REAL pequeña para validar el pipeline completo F3->F7 en vivo,
+# tras corregir la proyección de campos (software ya trae vendor/product/cpe).
+queries:
+  "España":
+    - id: es-ics-vnc-test
+      description: "ICS con VNC en España"
+      cenql: 'host.location.country_code="ES" and host.services.labels.value="ICS" and host.services.port=5900'
+    - id: es-unitronics-test
+      description: "Unitronics PCOM (20256) en España"
+      cenql: 'host.services.port=20256 and host.location.country_code="ES"'
+  "Global":
+    - id: gl-siemens-test
+      description: "Hosts con software Siemens indexado (semilla CVE)"
+      cenql: 'host.services.software.vendor="siemens"'
+    - id: gl-unitronics-test
+      description: "Hosts con software Unitronics indexado (semilla CVE/KEV)"
+      cenql: 'host.services.software.vendor="unitronics"'

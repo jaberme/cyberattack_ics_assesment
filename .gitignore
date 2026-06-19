@@ -1,0 +1,16 @@
+# Configuración local (puede referenciar variables de entorno; nunca subir)
+config/config.yaml
+
+# Artefactos de ejecución: pueden contener datos de hosts reales
+data/raw/
+data/clean/
+data/cve/
+data/counts.json
+data/kev_cache.json
+output/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/

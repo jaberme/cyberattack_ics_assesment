@@ -1,0 +1,80 @@
+# =============================================================================
+# Configuración del ICS-OSINT Toolkit  (copia este archivo a config.yaml)
+# =============================================================================
+# Los secretos NUNCA se escriben aquí: se referencian con ${env:VARIABLE} y se
+# resuelven desde el entorno. Antes de ejecutar:
+#
+#   export CENSYS_ORG_ID="..."
+#   export CENSYS_PAT="..."          # Personal Access Token de la Platform
+#   export NVD_API_KEY="..."         # opcional (recomendado para más velocidad)
+# =============================================================================
+
+censys:
+  organization_id: ${env:CENSYS_ORG_ID}
+  personal_access_token: ${env:CENSYS_PAT}
+  page_size: 100                      # hosts por página (paginación con cursor)
+
+collection:
+  default_max_records: 200            # máx. hosts a recolectar por consulta
+                                      # (los contadores totales se leen aparte)
+
+nvd:
+  api_key: ${env:NVD_API_KEY}         # vacío => límite de 5 req/30 s
+  kev_url: "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+
+# --- Filtrado de falsos positivos (Tabla 4.2) ---
+filters:
+  honeypot_labels:                    # etiquetas que marcan honeypots en Censys
+    - honeypot
+    - HONEYPOT
+  cloud_asn_names:                    # ASN de proveedores cloud a excluir
+    - Amazon
+    - Google
+    - Microsoft
+    - DigitalOcean
+    - OVH
+    - Hetzner
+    - Linode
+    - Oracle
+
+# --- Mapa código de país -> región del estudio ---
+regions:
+  ES: "España"
+  DE: "Europa Occidental"
+  FR: "Europa Occidental"
+  IT: "Europa Occidental"
+  NL: "Europa Occidental"
+  BE: "Europa Occidental"
+  PT: "Europa Occidental"
+  PL: "Europa del Este / Ucrania"
+  RO: "Europa del Este / Ucrania"
+  UA: "Europa del Este / Ucrania"
+  LT: "Europa del Este / Ucrania"
+  LV: "Europa del Este / Ucrania"
+  EE: "Europa del Este / Ucrania"
+  IL: "Oriente Medio"
+  IR: "Oriente Medio"
+  SA: "Oriente Medio"
+  AE: "Oriente Medio"
+  ZA: "África"
+  EG: "África"
+  NG: "África"
+  DZ: "África"
+  MA: "África"
+  TN: "África"
+  KE: "África"
+  GH: "África"
+  US: "Estados Unidos"
+
+# --- Anonimización de salidas (Sección 3.1.3) ---
+anonymization:
+  method: truncate                    # "truncate" | "hash"
+  keep_octets: 2                      # octetos conservados al truncar IPv4
+  salt: ${env:ANON_SALT}              # sal para el método "hash" (opcional)
+
+paths:
+  base: data
+  raw_dir: data/raw
+  clean_dir: data/clean
+  cve_dir: data/cve
+  output_dir: output
