@@ -1,5 +1,7 @@
 # ICS-OSINT Toolkit
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23249859.svg)](https://doi.org/10.5281/zenodo.23249859)
+
 Automatización **estrictamente pasiva** del estudio OSINT de exposición ICS/OT
 del TFG *«Estudio de la exposición de infraestructuras industriales en Internet
 mediante técnicas OSINT»* (Universidad de Almería, curso 2025/2026; autora:
